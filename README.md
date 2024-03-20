@@ -42,4 +42,4 @@ After landing on the home page you will be presented with two options.  One for 
 
 ## Where can I find this demo running?
 
-A live hosted demo can be found [here](//https://marketplace-n715.vercel.app/).
+A live hosted demo can be found [here](https://marketplace-eight-jet.vercel.app).
