@@ -4,6 +4,7 @@ import { getBaseUrl } from "~/utils/api";
 import {
   createTRPCRouter,
   protectedProcedure,
+  publicProcedure,
 } from "~/server/api/trpc";
 import { env } from "~/env";
 
@@ -83,7 +84,7 @@ export const stripeRouter = createTRPCRouter({
       });
     }),
 
-  getAccount: protectedProcedure
+  getAccount: publicProcedure
     .input(z.object({ id: z.number().optional().nullable() }))
     .query(async ({ ctx, input }) => {
       if (!input.id) {
