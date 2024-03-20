@@ -1,29 +1,32 @@
-# Create T3 App
+# Acme Marketplace Demo App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This app is a marketplace where:
+- Consumers can purchase individual items using the Stripe checkout flow.  
+- Merchants can register to be presented in the store front
+- Merchants can create a Stripe Connected Stripe account
+- Merchants can create products to be sold on the marketplace
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Understanding
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+This project was stood up over the course of a couple of days with only a few hours per day to work on it.  There are several lacking areas that need to be addressed.
+- Tests were not written due to the severe time constraints
+- Proper route protection was not added due to the time constraint (e.g. all users can see all stores and manage all stores)
+- Form validation was not added due to time constraints as well as proper disabling of buttons to prevent inadvertent actions.
+- NextJS was used only because I my machine was already setup for node and would help expedite the build out of this demo
+- The application is using a Stripe Account that is not fully onboarded...thus the ability to create onboarding links via the sdk is failing.  I have manually onboarded a connected account using the Stripe web interface.
+- The application uses MySQL as a data store but due to time constraints I did not create a dockerfile and initialize a MySQL container for local development
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Data Model
 
-## Learn More
+The following are the high level entities that are used in the system
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- Users: User are created once an individual has signed on using their Github account and are onboarded using Clerk
+- Stores: Stores belong to a user and can have multiple products and a single account
+- Account: Represent a Stripe Connected Account
+- Product: An item that has been added to a particular Stripe Connected Account and can be sold through the storefront
+- Event: A webhook event that is sent from Stripe via webhooks
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Where can I find this demo running?
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+A live hosted demo can be found [here](https://create.t3.gg/en/deployment/vercel).

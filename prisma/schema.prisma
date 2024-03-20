@@ -1,20 +1,91 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-    provider = "prisma-client-js"
-}
-
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+generator client {
+  provider = "prisma-client-js"
+}
 
-    @@index([name])
+model Event {
+  id        Int      @id @default(autoincrement())
+  accountId Int?
+  storeId   Int?
+  source    String?
+  data      Json
+  status    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  account   Account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  store     Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, createdAt])
+  @@index([storeId, createdAt])
+}
+
+model Account {
+  id             Int      @id @default(autoincrement())
+  stripeId       String
+  email          String
+  payoutsEnabled Boolean
+  chargesEnabled Boolean
+  userId         Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stores         Store[]
+  events         Event[]
+
+  @@index([userId])
+}
+
+model Store {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  userId      Int
+  accountId   Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  account     Account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products    Product[]
+  events      Event[]
+
+  @@index([userId])
+  @@index([accountId])
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String?
+  stripeId      String
+  price         String
+  stripePriceId String
+  storeId       Int
+  data          Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId, createdAt])
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  userId           String    @unique
+  email            String?
+  stripeCustomerId String?
+  status           String
+  accounts         Account[]
+  stores           Store[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([userId])
 }
