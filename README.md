@@ -13,8 +13,8 @@ This project was stood up over the course of a couple of days with only a few ho
 - Tests were not written due to the severe time constraints
 - Proper route protection was not added due to the time constraint (e.g. all users can see all stores and manage all stores)
 - Form validation was not added due to time constraints as well as proper disabling of buttons to prevent inadvertent actions.
-- NextJS was used only because I my machine was already setup for node and would help expedite the build out of this demo
-- The application is using a Stripe Account that is not fully onboarded...thus the ability to create onboarding links via the sdk is failing.  I have manually onboarded a connected account using the Stripe web interface.
+- NextJS was used only because my machine was already setup for node and would help expedite the build out of this demo
+- The application is using a Stripe Account that is not fully onboarded...thus the ability to create onboarding links via the sdk is failing.  I have manually onboarded a connected account using the Stripe web interface.  All newly created account will remain in the restricted state.
 - The application uses MySQL as a data store but due to time constraints I did not create a dockerfile and initialize a MySQL container for local development
 - ABC Provisions is the merchant that has been setup manually and has a fully enabled Connected Account.  All other accounts will be restricted.
 ## Data Model
